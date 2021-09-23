@@ -13,9 +13,16 @@
 
   --radius: 8px;
 
-  --font-sans: heisei-maru-gothic-std, serif;
+  --font-sans: heisei-maru-gothic-std, 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
+    'Hiragino Maru Gothic Pro', 'ヒラギノ角ゴ Pro W3',
+    'Hiragino Kaku Gothic Pro', 'HG丸ｺﾞｼｯｸM-PRO', 'HGMaruGothicMPRO', serif;
   --font-mono: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
+  --head-underline: linear-gradient(
+    transparent 70%,
+    rgba(201, 203, 255, 0.6) 70%
+  );
+  --purple: #7276e0;
 }
 
 * {
@@ -33,7 +40,9 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--fg);
-  font-family: heisei-maru-gothic-std, sans-serif;
+  font-family: heisei-maru-gothic-std, 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
+    'Hiragino Maru Gothic Pro', 'ヒラギノ角ゴ Pro W3',
+    'Hiragino Kaku Gothic Pro', 'HG丸ｺﾞｼｯｸM-PRO', 'HGMaruGothicMPRO', sans-serif;
   background-color: #fcfcfc;
   background-image: linear-gradient(
       rgba(233, 233, 233, 0.5) 2px,
@@ -253,11 +262,8 @@ figure {
 }
 
 a {
-  color: #0070f3;
+  color: var(--purple);
   text-decoration: none;
-}
-a:hover {
-  color: #3291ff;
 }
 
 .links {
@@ -283,13 +289,19 @@ h1 {
   /* font-size: 2.25rem; */
   /* font-weight: 100; */
   /* letter-spacing: -0.05rem; */
+  /* background: var(--head-underline); */
 }
 
 h2 {
-  font-weight: 300;
-  font-size: 1.25rem;
-  letter-spacing: -0.02rem;
-  color: var(--accents-3);
+  /* font-weight: 300; */
+  /* font-size: 1.25rem; */
+  /* letter-spacing: -0.02rem; */
+  /* color: var(--accents-3); */
+  /* background: var(--head-underline); */
+}
+
+h3 {
+  /* background: var(--head-underline); */
 }
 
 .video {
@@ -374,4 +386,12 @@ footer span:nth-child(3) {
 
 footer span:nth-child(3) a {
   color: inherit;
+}
+
+.post-tag {
+  font-size: 80%;
+  background-color: #f7edba;
+  border-radius: 50px 0px 0px 50px;
+  padding: 0px 10px;
+  margin-right: 10px;
 }

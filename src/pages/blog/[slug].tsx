@@ -159,14 +159,7 @@ const RenderPost = ({ post, redirect, preview }) => {
           <div className="authors">
             タグ🏷:{' '}
             {post.Tags.split(',').map((tag, index) => {
-              return (
-                <span>
-                  <span className="posted">{tag}</span>
-                  {index !== post.Tags.split(',').length - 1 ? (
-                    <span>, </span>
-                  ) : null}
-                </span>
-              )
+              return <span className="post-tag">{tag}</span>
             })}
           </div>
         )}

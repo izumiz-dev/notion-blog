@@ -3,6 +3,7 @@
 }
 
 .blogIndex h1 {
+  /* background: var(--head-underline); */
   margin-bottom: 50px;
 }
 
@@ -47,7 +48,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
+  position: relative;
+  text-decoration: none;
+  margin-bottom: 4px;
 }
+
+.titleContainer::after {
+  position: absolute;
+  bottom: -0px;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: var(--purple);
+  transform: scale(0, 1);
+  transform-origin: left top;
+  transition: transform 0.5s;
+}
+
+.titleContainer:hover::after {
+  transform: scale(1, 1);
+}
+
 .draftBadge {
   border-radius: 16px;
   background-color: black;
@@ -81,8 +103,12 @@
   margin-top: 0;
 }
 
-.post :global(h2),
+.post :global(h2) {
+  background: var(--head-underline);
+}
+
 .post :global(h3) {
+  background: var(--head-underline);
   margin: 3rem 0 1.5rem 0;
 }
 
