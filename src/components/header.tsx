@@ -16,18 +16,30 @@ const Header = ({ titlePre = '' }) => {
 
   return (
     <header className={styles.header}>
-      {/* <Head>
+      <Head>
         <title>{titlePre ? `${titlePre} |` : ''} Web Log from Notion</title>
-        <meta
+        {/* <meta
           name="description"
           content="An example Next.js site using Notion for the blog"
-        />
+        /> */}
+        <script>
+          {`
+                (function(d) {
+    var config = {
+      kitId: 'ddr0rhg',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document)
+            `}
+        </script>
         <meta name="og:title" content="Web Log from Notion" />
-        <meta property="og:image" content={ogImageUrl} />
+        {/* <meta property="og:image" content={ogImageUrl} />
         <meta name="twitter:site" content="@_ijjk" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={ogImageUrl} />
-      </Head> */}
+        <meta name="twitter:image" content={ogImageUrl} /> */}
+      </Head>
       <ul>
         {navItems.map(({ label, page, link }) => (
           <li key={label}>
