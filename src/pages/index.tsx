@@ -8,7 +8,7 @@ export default function Index() {
     <>
       <Header titlePre="Home" />
       <div className={sharedStyles.layout}>
-        <h1>My Notion Blog</h1>
+        <h1>Web Log from Notion</h1>
       </div>
     </>
   )

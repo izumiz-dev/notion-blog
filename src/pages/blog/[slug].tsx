@@ -152,14 +152,31 @@ const RenderPost = ({ post, redirect, preview }) => {
       )}
       <div className={blogStyles.post}>
         <h1>{post.Page || ''}</h1>
-        {post.Authors.length > 0 && (
-          <div className="authors">By: {post.Authors.join(' ')}</div>
-        )}
         {post.Date && (
-          <div className="posted">Posted: {getDateStr(post.Date)}</div>
+          <div className="authors">投稿日🗓: {getDateStr(post.Date)}</div>
+        )}
+        {post.Tags && (
+          <div className="authors">
+            タグ🏷:{' '}
+            {post.Tags.split(',').map((tag, index) => {
+              return (
+                <span>
+                  <span className="posted">{tag}</span>
+                  {index !== post.Tags.split(',').length - 1 ? (
+                    <span>, </span>
+                  ) : null}
+                </span>
+              )
+            })}
+          </div>
         )}
 
-        <hr />
+        <div
+          style={{
+            margin: '8px auto',
+            borderBottom: '4px dotted rgba(0, 0, 0, 0.6)',
+          }}
+        ></div>
 
         {(!post.content || post.content.length === 0) && (
           <p>This post has no content</p>

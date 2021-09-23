@@ -34,6 +34,8 @@ export async function getStaticProps({ preview }) {
 
   const { users } = await getNotionUsers([...authorsToGet])
 
+  console.log('posts:', posts)
+
   posts.map((post) => {
     post.Authors = post.Authors.map((id) => users[id].full_name)
   })
@@ -63,7 +65,7 @@ const Index = ({ posts = [], preview }) => {
         </div>
       )}
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
-        <h1>My Notion Blog</h1>
+        <h1>Web Log from Notion</h1>
         {posts.length === 0 && (
           <p className={blogStyles.noPosts}>There are no posts yet</p>
         )}
@@ -80,15 +82,27 @@ const Index = ({ posts = [], preview }) => {
                   </Link>
                 </span>
               </h3>
-              {post.Authors.length > 0 && (
-                <div className="authors">By: {post.Authors.join(' ')}</div>
-              )}
               {post.Date && (
-                <div className="posted">Posted: {getDateStr(post.Date)}</div>
+                <div className="authors">投稿日🗓: {getDateStr(post.Date)}</div>
+              )}
+              {post.Tags && (
+                <div className="authors">
+                  タグ🏷:{' '}
+                  {post.Tags.split(',').map((tag, index) => {
+                    return (
+                      <span>
+                        <span className="posted">{tag}</span>
+                        {index !== post.Tags.split(',').length - 1 ? (
+                          <span>, </span>
+                        ) : null}
+                      </span>
+                    )
+                  })}
+                </div>
               )}
               <p>
-                {(!post.preview || post.preview.length === 0) &&
-                  'No preview available'}
+                {/* {(!post.preview || post.preview.length === 0) &&
+                  'No preview available'} */}
                 {(post.preview || []).map((block, idx) =>
                   textBlock(block, true, `${post.Slug}${idx}`)
                 )}
