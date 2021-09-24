@@ -35,6 +35,10 @@ const Header = ({ titlePre = '' }) => {
             `}
         </script>
         <meta name="og:title" content="Web Log from Notion" />
+        <meta
+          name="google-site-verification"
+          content="gea16KM2TN6crqb32YOrh_H1X9fVovXoW2WgV7axPMw"
+        />
         {/* <meta property="og:image" content={ogImageUrl} />
         <meta name="twitter:site" content="@_ijjk" />
         <meta name="twitter:card" content="summary_large_image" />
