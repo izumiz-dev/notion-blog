@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Header from '../../components/header'
 
 import blogStyles from '../../styles/blog.module.css'
@@ -7,6 +6,7 @@ import sharedStyles from '../../styles/shared.module.css'
 import { postIsPublished } from '../../lib/blog-helpers'
 import getNotionUsers from '../../lib/notion/getNotionUsers'
 import getBlogIndex from '../../lib/notion/getBlogIndex'
+import Tag from '../../components/tag'
 
 export async function getStaticProps({ preview }) {
   const allTags: string[] = []
@@ -57,17 +57,9 @@ const Index = ({ tags = [] }) => {
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
         <h1>タグ一覧</h1>
       </div>
-      {tags.map((tag) => {
-        return (
-          <Link href="/tag/[slug]" as={`/tag/${tag}`} key={tag}>
-            <a style={{ color: 'black' }}>
-              <div style={{ textAlign: 'center' }}>
-                <span className="post-tag">{tag}</span>
-              </div>
-            </a>
-          </Link>
-        )
-      })}
+      {tags.map((tag) => (
+        <Tag tag={tag} />
+      ))}
     </>
   )
 }

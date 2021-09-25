@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { CSSProperties, useEffect } from 'react'
+import React from 'react'
 import Header from '../../components/header'
 import { getBlogLink, getDateStr, getTagLink } from '../../lib/blog-helpers'
 import getBlogIndex from '../../lib/notion/getBlogIndex'
@@ -7,6 +7,8 @@ import { textBlock } from '../../lib/notion/renderers'
 
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
+
+import Tag from '../../components/tag'
 
 // Return our list of blog posts to prerender
 export async function getStaticPaths() {
@@ -82,18 +84,12 @@ const TagIndex = ({ posts = [], tag }) => {
               {post.Tags && (
                 <div className="authors">
                   タグ🏷:{' '}
-                  {post.Tags.split(',').map((tag, index) => {
-                    return (
-                      <span className="post-tag" key={tag}>
-                        {tag}
-                      </span>
-                    )
+                  {post.Tags.split(',').map((tag) => {
+                    return <Tag tag={tag} />
                   })}
                 </div>
               )}
               <p>
-                {/* {(!post.preview || post.preview.length === 0) &&
-                  'No preview available'} */}
                 {(post.preview || []).map((block, idx) =>
                   textBlock(block, true, `${post.Slug}${idx}`)
                 )}

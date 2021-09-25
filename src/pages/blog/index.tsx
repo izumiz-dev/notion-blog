@@ -13,6 +13,8 @@ import { textBlock } from '../../lib/notion/renderers'
 import getNotionUsers from '../../lib/notion/getNotionUsers'
 import getBlogIndex from '../../lib/notion/getBlogIndex'
 
+import Tag from '../../components/tag'
+
 export async function getStaticProps({ preview }) {
   const postsTable = await getBlogIndex()
 
@@ -87,13 +89,11 @@ const Index = ({ posts = [], preview }) => {
                 <div className="authors">
                   タグ🏷:{' '}
                   {post.Tags.split(',').map((tag, index) => {
-                    return <span className="post-tag">{tag}</span>
+                    return <Tag tag={tag} />
                   })}
                 </div>
               )}
               <p>
-                {/* {(!post.preview || post.preview.length === 0) &&
-                  'No preview available'} */}
                 {(post.preview || []).map((block, idx) =>
                   textBlock(block, true, `${post.Slug}${idx}`)
                 )}
