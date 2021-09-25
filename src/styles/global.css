@@ -13,7 +13,7 @@
 
   --radius: 8px;
 
-  --font-sans: heisei-maru-gothic-std, 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
+  --font-sans: 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
     'Hiragino Maru Gothic Pro', 'ヒラギノ角ゴ Pro W3',
     'Hiragino Kaku Gothic Pro', 'HG丸ｺﾞｼｯｸM-PRO', 'HGMaruGothicMPRO', serif;
   --font-mono: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
@@ -40,7 +40,7 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--fg);
-  font-family: heisei-maru-gothic-std, 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
+  font-family: 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
     'Hiragino Maru Gothic Pro', 'ヒラギノ角ゴ Pro W3',
     'Hiragino Kaku Gothic Pro', 'HG丸ｺﾞｼｯｸM-PRO', 'HGMaruGothicMPRO', sans-serif;
   background-color: #fcfcfc;
@@ -392,6 +392,6 @@ footer span:nth-child(3) a {
   font-size: 80%;
   background-color: #f7edba;
   border-radius: 50px 0px 0px 50px;
-  padding: 0px 10px;
+  padding: 4px 10px;
   margin-right: 10px;
 }
