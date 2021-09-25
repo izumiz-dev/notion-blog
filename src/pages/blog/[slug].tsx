@@ -12,6 +12,7 @@ import React, { CSSProperties, useEffect } from 'react'
 import getBlogIndex from '../../lib/notion/getBlogIndex'
 import getNotionUsers from '../../lib/notion/getNotionUsers'
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
+import Tag from '../../components/tag'
 
 // Get the data for each blog post
 export async function getStaticProps({ params: { slug }, preview }) {
@@ -158,8 +159,8 @@ const RenderPost = ({ post, redirect, preview }) => {
         {post.Tags && (
           <div className="authors">
             タグ🏷:{' '}
-            {post.Tags.split(',').map((tag, index) => {
-              return <span className="post-tag">{tag}</span>
+            {post.Tags.split(',').map((tag) => {
+              return <Tag tag={tag} />
             })}
           </div>
         )}

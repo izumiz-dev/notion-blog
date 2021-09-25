@@ -57,9 +57,11 @@ const Index = ({ tags = [] }) => {
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
         <h1>タグ一覧</h1>
       </div>
-      {tags.map((tag) => (
-        <Tag tag={tag} />
-      ))}
+      <div style={{ textAlign: 'center' }}>
+        {tags.map((tag) => (
+          <Tag tag={tag} />
+        ))}
+      </div>
     </>
   )
 }
