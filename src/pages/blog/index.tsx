@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Header from '../../components/header'
+import { useRouter } from 'next/router'
 
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
@@ -8,6 +9,7 @@ import {
   getBlogLink,
   getDateStr,
   postIsPublished,
+  sortPosts,
 } from '../../lib/blog-helpers'
 import { textBlock } from '../../lib/notion/renderers'
 import getNotionUsers from '../../lib/notion/getNotionUsers'
@@ -34,6 +36,8 @@ export async function getStaticProps({ preview }) {
     })
     .filter(Boolean)
 
+  // const sortedPosts = sortPosts(posts, 'desc', 'date')
+
   const { users } = await getNotionUsers([...authorsToGet])
 
   posts.map((post) => {
@@ -50,6 +54,8 @@ export async function getStaticProps({ preview }) {
 }
 
 const Index = ({ posts = [], preview }) => {
+  const { query } = useRouter()
+
   return (
     <>
       <Header titlePre="Blog" />
@@ -69,7 +75,7 @@ const Index = ({ posts = [], preview }) => {
         {posts.length === 0 && (
           <p className={blogStyles.noPosts}>There are no posts yet</p>
         )}
-        {posts.map((post) => {
+        {sortPosts(posts, query.orderBy, 'date').map((post) => {
           return (
             <div className={blogStyles.postPreview} key={post.Slug}>
               <h3>
