@@ -47,7 +47,7 @@ export async function getStaticProps({ preview }) {
     props: {
       tags: allTags,
     },
-    revalidate: 10,
+    revalidate: 5,
   }
 }
 

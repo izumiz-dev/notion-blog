@@ -54,7 +54,7 @@ export async function getStaticProps({ params: { slug }, preview }) {
       posts: matchedPosts,
       tag: slug,
     },
-    revalidate: 10,
+    revalidate: 5,
   }
 }
 
