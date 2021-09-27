@@ -59,7 +59,9 @@ const Index = ({ tags = [] }) => {
       </div>
       <div style={{ textAlign: 'center' }}>
         {tags.map((tag) => (
-          <Tag tag={tag} />
+          <div key={`div${tag}`}>
+            <Tag tag={tag} key={`tag-${tag}`} />
+          </div>
         ))}
       </div>
     </>

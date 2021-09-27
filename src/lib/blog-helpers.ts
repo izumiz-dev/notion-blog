@@ -39,10 +39,12 @@ export const sortPosts = (
   sortBy: 'date'
 ) => {
   const sorted = posts.sort((a, b) => {
+    const at = new Date(a.Date).getTime()
+    const bt = new Date(b.Date).getTime()
     if (orderBy === 'asc') {
-      return a.Date - b.Date
+      return at - bt
     } else if (orderBy === 'desc') {
-      return b.Date - a.Date
+      return bt - at
     }
   })
   return sorted
