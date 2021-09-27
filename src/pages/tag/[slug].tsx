@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 import Header from '../../components/header'
+import PostsLengthZero from '../../components/posts-length-zero'
+
 import { getBlogLink, getDateStr, getTagLink } from '../../lib/blog-helpers'
 import getBlogIndex from '../../lib/notion/getBlogIndex'
 import { textBlock } from '../../lib/notion/renderers'
@@ -62,9 +64,7 @@ const TagIndex = ({ posts = [], tag }) => {
       <Header titlePre="Tag" />
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
         <h1>{`${tag}の記事一覧`}</h1>
-        {posts.length === 0 && (
-          <p className={blogStyles.noPosts}>There are no posts yet</p>
-        )}
+        <PostsLengthZero posts={posts} />
         {posts.map((post) => {
           return (
             <div className={blogStyles.postPreview} key={post.Slug}>

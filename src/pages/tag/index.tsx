@@ -1,4 +1,5 @@
 import Header from '../../components/header'
+import PostsLengthZero from '../../components/posts-length-zero'
 
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
@@ -57,6 +58,7 @@ const Index = ({ tags = [] }) => {
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
         <h1>タグ一覧</h1>
       </div>
+      <PostsLengthZero posts={tags} />
       <div style={{ textAlign: 'center' }}>
         {tags.map((tag) => (
           <div key={`div${tag}`}>

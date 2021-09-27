@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Header from '../../components/header'
-import { useRouter } from 'next/router'
+import PostsLengthZero from '../../components/posts-length-zero'
 
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
@@ -74,9 +74,7 @@ const Index = ({ posts = [], preview }) => {
       )}
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
         <h1>Web Log from Notion</h1>
-        {posts.length === 0 && (
-          <p className={blogStyles.noPosts}>There are no posts yet</p>
-        )}
+        <PostsLengthZero posts={posts} />
         {posts.map((post) => {
           return (
             <div className={blogStyles.postPreview} key={post.Slug}>
