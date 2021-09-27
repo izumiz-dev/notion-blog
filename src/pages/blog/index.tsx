@@ -44,17 +44,19 @@ export async function getStaticProps({ preview }) {
     post.Authors = post.Authors.map((id) => users[id].full_name)
   })
 
+  const sortedPosts = sortPosts(posts, 'desc', 'date')
+
   return {
     props: {
       preview: preview || false,
-      posts,
+      posts: sortedPosts,
     },
     revalidate: 10,
   }
 }
 
 const Index = ({ posts = [], preview }) => {
-  const { query } = useRouter()
+  // const { query } = useRouter()
 
   return (
     <>
@@ -75,7 +77,7 @@ const Index = ({ posts = [], preview }) => {
         {posts.length === 0 && (
           <p className={blogStyles.noPosts}>There are no posts yet</p>
         )}
-        {sortPosts(posts, query.orderBy, 'date').map((post) => {
+        {posts.map((post) => {
           return (
             <div className={blogStyles.postPreview} key={post.Slug}>
               <h3>
