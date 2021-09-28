@@ -51,7 +51,7 @@ export async function getStaticProps({ preview }) {
       preview: preview || false,
       posts: sortedPosts,
     },
-    revalidate: 5,
+    revalidate: false,
   }
 }
 
