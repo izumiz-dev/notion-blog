@@ -104,6 +104,7 @@
 }
 
 .post :global(h2) {
+  color: var(--fg);
   background: var(--head-underline);
 }
 

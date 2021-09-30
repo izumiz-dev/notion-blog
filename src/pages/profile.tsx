@@ -1,3 +1,5 @@
+import dynamic from 'next/dynamic'
+
 import Header from '../components/header'
 import ExtLink from '../components/ext-link'
 
@@ -6,6 +8,10 @@ import contactStyles from '../styles/contact.module.css'
 
 import GitHub from '../components/svgs/github'
 import Twitter from '../components/svgs/twitter'
+
+const ReactGitHubCalendar = dynamic(() => import('react-ts-github-calendar'), {
+  ssr: false,
+})
 
 const contacts = [
   {
@@ -37,6 +43,14 @@ export default function Profile() {
               </ExtLink>
             )
           })}
+        </div>
+        <h2>Contribution</h2>
+        <div className={contactStyles.contribution}>
+          <ReactGitHubCalendar
+            responsive
+            userName={'izumiz-dev'}
+            global_stats={false}
+          />
         </div>
       </div>
     </>

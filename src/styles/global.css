@@ -285,18 +285,18 @@ mark {
 }
 
 h1 {
-  /* margin: var(--gap-double) 0 calc(0.5 * var(--gap)) 0; */
-  /* font-size: 2.25rem; */
-  /* font-weight: 100; */
-  /* letter-spacing: -0.05rem; */
+  margin: var(--gap-double) 0 calc(0.5 * var(--gap)) 0;
+  font-size: 1.5rem;
+  font-weight: 100;
+  letter-spacing: -0.05rem;
   /* background: var(--head-underline); */
 }
 
 h2 {
-  /* font-weight: 300; */
-  /* font-size: 1.25rem; */
-  /* letter-spacing: -0.02rem; */
-  /* color: var(--accents-3); */
+  font-weight: 300;
+  font-size: 1.25rem;
+  letter-spacing: -0.02rem;
+  color: var(--accents-3);
   /* background: var(--head-underline); */
 }
 
@@ -390,8 +390,28 @@ footer span:nth-child(3) a {
 
 .post-tag {
   font-size: 80%;
-  background-color: #f7edba;
+  background-color: #fade52;
   border-radius: 50px 0px 0px 50px;
   padding: 4px 10px;
   margin-right: 10px;
+  transition: background-color 0.2s;
+}
+
+.post-tag:hover {
+  font-size: 80%;
+  background-color: #fade5262;
+  border-radius: 50px 0px 0px 50px;
+  padding: 4px 10px;
+  margin-right: 10px;
+}
+
+.js-calendar-graph-svg {
+  --color-calendar-graph-day-bg: #dddbdb;
+  --color-calendar-graph-day-L1-bg: #8e91da;
+  --color-calendar-graph-day-L2-bg: #7074e0;
+  --color-calendar-graph-day-L3-bg: #3f3e9e;
+  --color-calendar-graph-day-L4-bg: #1a1c52;
+}
+.js-calendar-graph .width-full {
+  display: none;
 }

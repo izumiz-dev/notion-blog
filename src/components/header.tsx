@@ -8,7 +8,6 @@ const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Home', page: '/' },
   { label: 'Blog', page: '/blog' },
   { label: 'Tag', page: '/tag' },
-  { label: 'Contribution', page: '/contribution' },
   { label: 'Profile', page: '/profile' },
 ]
 
