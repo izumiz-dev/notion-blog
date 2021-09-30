@@ -21,15 +21,6 @@ export default function Index() {
             このブログはNotion-blogで作成しています
           </a>
         </div>
-        <h2>進捗メーター</h2>
-        <div style={{ padding: '0 20%' }}>
-          <ReactGitHubCalendar
-            // tooltips
-            responsive
-            global_stats={false}
-            userName={'izumiz-dev'}
-          />
-        </div>
       </div>
     </>
   )

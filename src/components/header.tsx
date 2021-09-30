@@ -8,6 +8,7 @@ const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Home', page: '/' },
   { label: 'Blog', page: '/blog' },
   { label: 'Tag', page: '/tag' },
+  { label: 'Contribution', page: '/contribution' },
   { label: 'Profile', page: '/profile' },
 ]
 
@@ -27,10 +28,10 @@ const Header = ({ titlePre = '' }) => {
           name="google-site-verification"
           content="gea16KM2TN6crqb32YOrh_H1X9fVovXoW2WgV7axPMw"
         />
-        {/* <meta property="og:image" content={ogImageUrl} />
-        <meta name="twitter:site" content="@_ijjk" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={ogImageUrl} /> */}
+        {/* <meta property="og:image" content={ogImageUrl} /> */}
+        {/* <meta name="twitter:site" content="@izumiz-dev" /> */}
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        {/* <meta name="twitter:image" content={ogImageUrl} /> */}
       </Head>
       <ul>
         {navItems.map(({ label, page, link }) => (
