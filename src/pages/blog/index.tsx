@@ -89,11 +89,11 @@ const Index = ({ posts = [], preview }) => {
                 </span>
               </h3>
               {post.Date && (
-                <div className="authors">投稿日🗓: {getDateStr(post.Date)}</div>
+                <div className="authors">投稿日: {getDateStr(post.Date)}</div>
               )}
               {post.Tags && (
                 <div className="authors">
-                  タグ🏷:{' '}
+                  タグ:{' '}
                   {post.Tags.split(',').map((tag, index) => {
                     return <Tag tag={tag} />
                   })}

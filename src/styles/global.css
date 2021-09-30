@@ -23,6 +23,7 @@
     rgba(201, 203, 255, 0.6) 70%
   );
   --purple: #7276e0;
+  --highlight-purple: #c8c9e2;
 }
 
 * {
@@ -390,7 +391,8 @@ footer span:nth-child(3) a {
 
 .post-tag {
   font-size: 80%;
-  background-color: #fade52;
+  /* color: white; */
+  background-color: var(--highlight-purple);
   border-radius: 50px 0px 0px 50px;
   padding: 4px 10px;
   margin-right: 10px;
@@ -398,8 +400,8 @@ footer span:nth-child(3) a {
 }
 
 .post-tag:hover {
+  opacity: 60%;
   font-size: 80%;
-  background-color: #fade5262;
   border-radius: 50px 0px 0px 50px;
   padding: 4px 10px;
   margin-right: 10px;

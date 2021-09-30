@@ -55,3 +55,7 @@
     margin: 2vh 2vw;
   }
 }
+
+.icon {
+  fill: var(--purple);
+}
