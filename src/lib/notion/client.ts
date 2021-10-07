@@ -96,7 +96,7 @@ export async function getPosts(pageSize: number = 10, cursor?: string) {
   return data.results.map((item) => {
     const prop = item.properties
 
-    console.log(JSON.stringify(prop, null, 4))
+    // console.log(JSON.stringify(prop, null, 4))
 
     const post: Post = {
       PageId: item.id,
@@ -227,7 +227,7 @@ export async function getPostBySlug(slug: string) {
 }
 
 export async function getPostsByTag(tag: string, cursor?: string) {
-  console.log('💜', tag)
+  // console.log('💜', tag)
   let params = {
     database_id: DATABASE_ID,
     filter: {
