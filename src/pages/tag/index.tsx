@@ -4,50 +4,17 @@ import PostsLengthZero from '../../components/posts-length-zero'
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
-import { postIsPublished } from '../../lib/blog-helpers'
-import getNotionUsers from '../../lib/notion/getNotionUsers'
-import getBlogIndex from '../../lib/notion/getBlogIndex'
 import Tag from '../../components/tag'
+import { getAllTags } from '../../lib/notion/client'
 
-export async function getStaticProps({ preview }) {
-  const allTags: string[] = []
-  const postsTable = await getBlogIndex()
-
-  const authorsToGet: Set<string> = new Set()
-  const posts: any[] = Object.keys(postsTable)
-    .map((slug) => {
-      const post = postsTable[slug]
-      // remove draft posts in production
-      if (!preview && !postIsPublished(post)) {
-        return null
-      }
-      post.Authors = post.Authors || []
-      for (const author of post.Authors) {
-        authorsToGet.add(author)
-      }
-      return post
-    })
-    .filter(Boolean)
-
-  posts.forEach((post) => {
-    post.Tags.split(',').forEach((tag) => {
-      if (!allTags.includes(tag)) {
-        allTags.push(tag)
-      }
-    })
-  })
-
-  const { users } = await getNotionUsers([...authorsToGet])
-
-  posts.map((post) => {
-    post.Authors = post.Authors.map((id) => users[id].full_name)
-  })
+export async function getStaticProps() {
+  const tags = await getAllTags()
 
   return {
     props: {
-      tags: allTags,
+      tags,
     },
-    revalidate: false,
+    revalidate: 60,
   }
 }
 

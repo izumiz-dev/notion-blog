@@ -11,8 +11,8 @@ interface Post {
   Slug: string
   Date: string
   Tags: string[]
-  Excerpt: string
-  OGImage: string
+  Excerpt?: string
+  OGImage?: string
 }
 
 interface Block {
@@ -96,15 +96,17 @@ export async function getPosts(pageSize: number = 10, cursor?: string) {
   return data.results.map((item) => {
     const prop = item.properties
 
+    console.log(JSON.stringify(prop, null, 4))
+
     const post: Post = {
       PageId: item.id,
       Title: prop.Page.title[0].plain_text,
       Slug: prop.Slug.rich_text[0].plain_text,
       Date: prop.Date.date.start,
       Tags: prop.Tags.multi_select.map((opt) => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
+      // Excerpt: prop.Excerpt.rich_text[0].plain_text,
+      // OGImage:
+      //   prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
     }
 
     return post
@@ -154,9 +156,9 @@ export async function getAllPosts() {
         Slug: prop.Slug.rich_text[0].plain_text,
         Date: prop.Date.date.start,
         Tags: prop.Tags.multi_select.map((opt) => opt.name),
-        Excerpt: prop.Excerpt.rich_text[0].plain_text,
-        OGImage:
-          prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
+        // Excerpt: prop.Excerpt.rich_text[0].plain_text,
+        // OGImage:
+        //   prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
       }
 
       return post
@@ -217,14 +219,15 @@ export async function getPostBySlug(slug: string) {
     Slug: prop.Slug.rich_text[0].plain_text,
     Date: prop.Date.date.start,
     Tags: prop.Tags.multi_select.map((opt) => opt.name),
-    Excerpt: prop.Excerpt.rich_text[0].plain_text,
-    OGImage: prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
+    // Excerpt: prop.Excerpt.rich_text[0].plain_text,
+    // OGImage: prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
   }
 
   return post
 }
 
 export async function getPostsByTag(tag: string, cursor?: string) {
+  console.log('💜', tag)
   let params = {
     database_id: DATABASE_ID,
     filter: {
@@ -273,9 +276,9 @@ export async function getPostsByTag(tag: string, cursor?: string) {
       Slug: prop.Slug.rich_text[0].plain_text,
       Date: prop.Date.date.start,
       Tags: prop.Tags.multi_select.map((opt) => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
+      // Excerpt: prop.Excerpt.rich_text[0].plain_text,
+      // OGImage:
+      // prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
     }
 
     return post

@@ -5,73 +5,29 @@ import PostsLengthZero from '../../components/posts-length-zero'
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
-import {
-  getBlogLink,
-  getDateStr,
-  postIsPublished,
-  sortPosts,
-} from '../../lib/blog-helpers'
+import { getBlogLink, getTagLink, sortPosts } from '../../lib/blog-helpers'
+import { getPosts, getAllTags } from '../../lib/notion/client'
 import { textBlock } from '../../lib/notion/renderers'
-import getNotionUsers from '../../lib/notion/getNotionUsers'
-import getBlogIndex from '../../lib/notion/getBlogIndex'
 
 import Tag from '../../components/tag'
 
-export async function getStaticProps({ preview }) {
-  const postsTable = await getBlogIndex()
-
-  const authorsToGet: Set<string> = new Set()
-  const posts: any[] = Object.keys(postsTable)
-    .map((slug) => {
-      const post = postsTable[slug]
-      // remove draft posts in production
-      if (!preview && !postIsPublished(post)) {
-        return null
-      }
-      post.Authors = post.Authors || []
-      for (const author of post.Authors) {
-        authorsToGet.add(author)
-      }
-      return post
-    })
-    .filter(Boolean)
-
-  // const sortedPosts = sortPosts(posts, 'desc', 'date')
-
-  const { users } = await getNotionUsers([...authorsToGet])
-
-  posts.map((post) => {
-    post.Authors = post.Authors.map((id) => users[id].full_name)
-  })
+export async function getStaticProps() {
+  const posts = await getPosts()
 
   const sortedPosts = sortPosts(posts, 'desc', 'date')
 
   return {
     props: {
-      preview: preview || false,
       posts: sortedPosts,
     },
-    revalidate: false,
+    revalidate: 60,
   }
 }
 
-const Index = ({ posts = [], preview }) => {
-  // const { query } = useRouter()
-
+const Index = ({ posts = [] }) => {
   return (
     <>
       <Header titlePre="Blog" />
-      {preview && (
-        <div className={blogStyles.previewAlertContainer}>
-          <div className={blogStyles.previewAlert}>
-            <b>Note:</b>
-            {` `}Viewing in preview mode{' '}
-            <Link href={`/api/clear-preview`}>
-              <button className={blogStyles.escapePreview}>Exit Preview</button>
-            </Link>
-          </div>
-        </div>
-      )}
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
         <h1>Web Log from Notion</h1>
         <PostsLengthZero posts={posts} />
@@ -80,21 +36,19 @@ const Index = ({ posts = [], preview }) => {
             <div className={blogStyles.postPreview} key={post.Slug}>
               <h3>
                 <span className={blogStyles.titleContainer}>
-                  {!post.Published && (
+                  {/* {!post.Published && (
                     <span className={blogStyles.draftBadge}>Draft</span>
-                  )}
+                  )} */}
                   <Link href="/blog/[slug]" as={getBlogLink(post.Slug)}>
-                    <a>{post.Page}</a>
+                    <a>{post.Title}</a>
                   </Link>
                 </span>
               </h3>
-              {post.Date && (
-                <div className="authors">投稿日: {getDateStr(post.Date)}</div>
-              )}
+              {post.Date && <div className="authors">投稿日: {post.Date}</div>}
               {post.Tags && (
                 <div className="authors">
                   タグ:{' '}
-                  {post.Tags.split(',').map((tag, index) => {
+                  {post.Tags.map((tag) => {
                     return <Tag tag={tag} />
                   })}
                 </div>
