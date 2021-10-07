@@ -13,11 +13,7 @@ export default function Index() {
       <div className={sharedStyles.layout}>
         <h1>Blog Home</h1>
         <div style={{ textAlign: 'center' }}>
-          <p>
-            <s>たまにバグります…</s>
-            <br />
-            ISRをやめてSSGにしました.
-          </p>
+          <p>🚧工事中 Under Construction🚧</p>
         </div>
         <h2 style={{ color: '#000' }}>Contribution</h2>
         <div className={contactStyles.contribution}>
