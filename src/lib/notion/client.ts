@@ -5,6 +5,19 @@ const client = new Client({
   auth: NOTION_API_SECRET,
 })
 
+interface ImageBlock extends Block {
+  Image: Image
+}
+
+interface Image {
+  Caption: RichText[]
+  Type: string
+  File: File
+}
+
+interface File {
+  Url: string
+}
 interface Post {
   PageId: string
   Title: string

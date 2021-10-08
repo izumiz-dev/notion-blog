@@ -202,6 +202,19 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
             case 'heading_3':
               renderHeading('h3')
               break
+            case 'image':
+              toRender.push(<img src={block.Image.File.Url} />)
+              if (
+                block.Image.Caption.length > 0 &&
+                block.Image.Caption[0].Text.Content
+              ) {
+                toRender.push(
+                  <div className={blogStyles.caption}>
+                    {block.Image.Caption[0].Text.Content}
+                  </div>
+                )
+              }
+              break
             case 'code':
               toRender.push(
                 <components.Code key={block.Id} language={block.Language || ''}>
