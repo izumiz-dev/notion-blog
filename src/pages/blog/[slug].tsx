@@ -110,7 +110,7 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
           <div className="authors">
             タグ:{' '}
             {post.Tags.map((tag) => {
-              return <Tag tag={tag} />
+              return <Tag tag={tag} key={`tag-${tag}`} />
             })}
           </div>
         )}

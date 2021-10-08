@@ -3,7 +3,7 @@ import React from 'react'
 import Header from '../../components/header'
 import PostsLengthZero from '../../components/posts-length-zero'
 
-import { getBlogLink, getTagLink } from '../../lib/blog-helpers'
+import { getBlogLink, getDateStr, getTagLink } from '../../lib/blog-helpers'
 import { getPostsByTag, getAllTags } from '../../lib/notion/client'
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
@@ -14,7 +14,6 @@ import { textBlock } from '../../lib/notion/renderers'
 // Return our list of blog posts to prerender
 export async function getStaticPaths() {
   const tags = await getAllTags()
-
   return {
     paths: tags.map((tag) => getTagLink(tag)),
     fallback: true,
@@ -51,12 +50,14 @@ const TagIndex = ({ posts = [], tag }) => {
                   </Link>
                 </span>
               </h3>
-              {post.Date && <div className="authors">投稿日: {post.Date}</div>}
+              {post.Date && (
+                <div className="authors">投稿日: {getDateStr(post.Date)}</div>
+              )}
               {post.Tags && (
                 <div className="authors">
                   タグ:{' '}
                   {post.Tags.map((tag) => {
-                    return <Tag tag={tag} />
+                    return <Tag tag={tag} key={`tag-${tag}`} />
                   })}
                 </div>
               )}
