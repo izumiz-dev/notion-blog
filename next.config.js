@@ -62,9 +62,7 @@ if (!DATABASE_ID) {
 }
 
 module.exports = {
-  future: {
-    webpack5: true,
-  },
+  webpack5: true,
   webpack(cfg, { dev, isServer }) {
     // only compile build-rss in production server build
     if (dev || !isServer) return cfg
