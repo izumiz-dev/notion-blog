@@ -7,6 +7,7 @@ import getNotionUsers from './notion/getNotionUsers'
 import { postIsPublished, getBlogLink } from './blog-helpers'
 import { loadEnvConfig } from '@next/env'
 import serverConstants from './notion/server-constants'
+import { textBlock } from './notion/renderers'
 
 // must use weird syntax to bypass auto replacing of NODE_ENV
 process.env['NODE' + '_ENV'] = 'production'
