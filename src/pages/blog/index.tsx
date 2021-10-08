@@ -9,6 +9,7 @@ import { getBlogLink, getTagLink, sortPosts } from '../../lib/blog-helpers'
 import { getPosts, getAllTags } from '../../lib/notion/client'
 
 import Tag from '../../components/tag'
+import { textBlock } from '../../lib/notion/renderers'
 
 export async function getStaticProps() {
   const posts = await getPosts()
