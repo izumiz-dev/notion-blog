@@ -3,14 +3,13 @@ import React from 'react'
 import Header from '../../components/header'
 import PostsLengthZero from '../../components/posts-length-zero'
 
-import getBlogIndex from '../../lib/notion/getBlogIndex'
-import { textBlock } from '../../lib/notion/renderers'
 import { getBlogLink, getTagLink } from '../../lib/blog-helpers'
 import { getPostsByTag, getAllTags } from '../../lib/notion/client'
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
 import Tag from '../../components/tag'
+import { textBlock } from '../../lib/notion/renderers'
 
 // Return our list of blog posts to prerender
 export async function getStaticPaths() {
@@ -23,13 +22,13 @@ export async function getStaticPaths() {
 }
 
 // Get the data for each blog post
-export async function getStaticProps({ params: { slug } }) {
-  const posts = await getPostsByTag(slug)
+export async function getStaticProps({ params: { tag } }) {
+  const posts = await getPostsByTag(tag)
 
   return {
     props: {
       posts,
-      tag: slug,
+      tag: tag,
     },
     revalidate: 60,
   }

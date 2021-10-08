@@ -7,7 +7,6 @@ import sharedStyles from '../../styles/shared.module.css'
 
 import { getBlogLink, getTagLink, sortPosts } from '../../lib/blog-helpers'
 import { getPosts, getAllTags } from '../../lib/notion/client'
-import { textBlock } from '../../lib/notion/renderers'
 
 import Tag from '../../components/tag'
 

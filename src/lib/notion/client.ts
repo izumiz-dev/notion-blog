@@ -13,6 +13,7 @@ interface Post {
   Tags: string[]
   Excerpt?: string
   OGImage?: string
+  Rank?: number
 }
 
 interface Block {
@@ -31,6 +32,29 @@ interface HeadingBlock extends Block {
 
 interface ListBlock extends Block {
   RichTexts: RichText[]
+}
+
+interface ImageBlock extends Block {
+  Image: Image
+}
+
+interface CodeBlock extends Block {
+  Code: Code
+}
+
+interface Image {
+  Caption: RichText[]
+  Type: string
+  File: File
+}
+
+interface File {
+  Url: string
+}
+
+interface Code {
+  Text: RichText[]
+  Language: string
 }
 
 interface RichText {
@@ -58,7 +82,7 @@ interface Link {
   Url: string
 }
 
-export async function getPosts(pageSize: number = 10, cursor?: string) {
+export async function getPosts(pageSize: number = 10) {
   let params = {
     database_id: DATABASE_ID,
     filter: {
@@ -87,35 +111,13 @@ export async function getPosts(pageSize: number = 10, cursor?: string) {
     page_size: pageSize,
   }
 
-  if (!!cursor) {
-    params['start_cursor'] = cursor
-  }
-
   const data = await client.databases.query(params)
 
-  return data.results.map((item) => {
-    const prop = item.properties
-
-    // console.log(JSON.stringify(prop, null, 4))
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map((opt) => opt.name),
-      // Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      // OGImage:
-      //   prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
-    }
-
-    return post
-  })
+  return data.results.map((item) => _buildPost(item))
 }
 
 export async function getAllPosts() {
-  let allPosts: Post[] = []
-
+  let results = []
   let params = {
     database_id: DATABASE_ID,
     filter: {
@@ -147,24 +149,7 @@ export async function getAllPosts() {
   while (true) {
     const data = await client.databases.query(params)
 
-    const posts = data.results.map((item) => {
-      const prop = item.properties
-
-      const post: Post = {
-        PageId: item.id,
-        Title: prop.Page.title[0].plain_text,
-        Slug: prop.Slug.rich_text[0].plain_text,
-        Date: prop.Date.date.start,
-        Tags: prop.Tags.multi_select.map((opt) => opt.name),
-        // Excerpt: prop.Excerpt.rich_text[0].plain_text,
-        // OGImage:
-        //   prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
-      }
-
-      return post
-    })
-
-    allPosts = allPosts.concat(posts)
+    results = results.concat(data.results)
 
     if (!data.has_more) {
       break
@@ -173,7 +158,114 @@ export async function getAllPosts() {
     params['start_cursor'] = data.next_cursor
   }
 
-  return allPosts
+  return results.map((item) => _buildPost(item))
+}
+
+export async function getRankedPosts(pageSize: number = 10) {
+  const params = {
+    database_id: DATABASE_ID,
+    filter: {
+      and: [
+        {
+          property: 'Published',
+          checkbox: {
+            equals: true,
+          },
+        },
+        {
+          property: 'Date',
+          date: {
+            on_or_before: new Date().toISOString(),
+          },
+        },
+        {
+          property: 'Rank',
+          number: {
+            is_not_empty: true,
+          },
+        },
+      ],
+    },
+    sorts: [
+      {
+        property: 'Rank',
+        direction: 'descending',
+      },
+    ],
+    page_size: pageSize,
+  }
+
+  const data = await client.databases.query(params)
+
+  return data.results.map((item) => _buildPost(item))
+}
+
+export async function getPostsBefore(date: string, pageSize: number = 10) {
+  const params = {
+    database_id: DATABASE_ID,
+    filter: {
+      and: [
+        {
+          property: 'Published',
+          checkbox: {
+            equals: true,
+          },
+        },
+        {
+          property: 'Date',
+          date: {
+            before: date,
+          },
+        },
+      ],
+    },
+    sorts: [
+      {
+        property: 'Date',
+        timestamp: 'created_time',
+        direction: 'descending',
+      },
+    ],
+    page_size: pageSize,
+  }
+
+  const data = await client.databases.query(params)
+
+  return data.results.map((item) => _buildPost(item))
+}
+
+export async function getFirstPost() {
+  const params = {
+    database_id: DATABASE_ID,
+    filter: {
+      and: [
+        {
+          property: 'Published',
+          checkbox: {
+            equals: true,
+          },
+        },
+        {
+          property: 'Date',
+          date: {
+            on_or_before: new Date().toISOString(),
+          },
+        },
+      ],
+    },
+    sorts: [
+      {
+        property: 'Date',
+        timestamp: 'created_time',
+        direction: 'ascending',
+      },
+    ],
+    page_size: 1,
+  }
+
+  const data = await client.databases.query(params)
+
+  return _buildPost(data.results[0])
 }
 
 export async function getPostBySlug(slug: string) {
@@ -210,24 +302,10 @@ export async function getPostBySlug(slug: string) {
     ],
   })
 
-  const result = data.results[0]
-  const prop = result.properties
-
-  const post: Post = {
-    PageId: result.id,
-    Title: prop.Page.title[0].plain_text,
-    Slug: prop.Slug.rich_text[0].plain_text,
-    Date: prop.Date.date.start,
-    Tags: prop.Tags.multi_select.map((opt) => opt.name),
-    // Excerpt: prop.Excerpt.rich_text[0].plain_text,
-    // OGImage: prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
-  }
-
-  return post
+  return _buildPost(data.results[0])
 }
 
-export async function getPostsByTag(tag: string, cursor?: string) {
-  // console.log('💜', tag)
+export async function getPostsByTag(tag: string, pageSize: number = 100) {
   let params = {
     database_id: DATABASE_ID,
     filter: {
@@ -259,30 +337,12 @@ export async function getPostsByTag(tag: string, cursor?: string) {
         direction: 'descending',
       },
     ],
-  }
-
-  if (!!cursor) {
-    params['start_cursor'] = cursor
+    page_size: pageSize,
   }
 
   const data = await client.databases.query(params)
 
-  return data.results.map((item) => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map((opt) => opt.name),
-      // Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      // OGImage:
-      // prop.OGImage.files.length > 0 ? prop.OGImage.files[0].name : null,
-    }
-
-    return post
-  })
+  return data.results.map((item) => _buildPost(item))
 }
 
 export async function getAllBlocksByPageId(pageId) {
@@ -335,7 +395,82 @@ export async function getAllBlocksByPageId(pageId) {
             }),
           }
           break
-        case 'unsupported':
+        case 'image':
+          const image: Image = {
+            Caption: item.image.caption.map((item) => {
+              const text: Text = {
+                Content: item.text.content,
+                Link: item.text.link,
+              }
+
+              const annotation: Annotation = {
+                Bold: item.annotations.bold,
+                Italic: item.annotations.italic,
+                Strikethrough: item.annotations.strikethrough,
+                Underline: item.annotations.underline,
+                Code: item.annotations.code,
+                Color: item.annotations.color,
+              }
+
+              const richText: RichText = {
+                Text: text,
+                Annotation: annotation,
+                PlainText: item.plain_text,
+                Href: item.href,
+              }
+
+              return richText
+            }),
+            Type: item.image.type,
+            File: {
+              Url: item.image.file.url,
+            },
+          }
+
+          block = {
+            Id: item.id,
+            Type: item.type,
+            HasChildren: item.has_children,
+            Image: image,
+          }
+          break
+        case 'code':
+          const code: Code = {
+            Text: item[item.type].text.map((item) => {
+              const text: Text = {
+                Content: item.text.content,
+                Link: item.text.link,
+              }
+
+              const annotation: Annotation = {
+                Bold: item.annotations.bold,
+                Italic: item.annotations.italic,
+                Strikethrough: item.annotations.strikethrough,
+                Underline: item.annotations.underline,
+                Code: item.annotations.code,
+                Color: item.annotations.color,
+              }
+
+              const richText: RichText = {
+                Text: text,
+                Annotation: annotation,
+                PlainText: item.plain_text,
+                Href: item.href,
+              }
+
+              return richText
+            }),
+            Language: item.code.language,
+          }
+
+          block = {
+            Id: item.id,
+            Type: item.type,
+            HasChildren: item.has_children,
+            Code: code,
+          }
+          break
+        default:
           block = {
             Id: item.id,
             Type: item.type,
@@ -363,5 +498,25 @@ export async function getAllTags() {
   const data = await client.databases.retrieve({
     database_id: DATABASE_ID,
   })
-  return data.properties.Tags.multi_select.options.map((option) => option.name)
+  return data.properties.Tags.multi_select.options
+    .map((option) => option.name)
+    .sort()
+}
+
+function _buildPost(data) {
+  const prop = data.properties
+
+  const post: Post = {
+    PageId: data.id,
+    Title: prop.Page.title[0].plain_text,
+    Slug: prop.Slug.rich_text[0].plain_text,
+    Date: prop.Date.date.start,
+    Tags: prop.Tags.multi_select.map((opt) => opt.name),
+    // Excerpt: prop.Excerpt.rich_text[0].plain_text,
+    // OGImage:
+    //   prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
+    // Rank: prop.Rank.number,
+  }
+
+  return post
 }
