@@ -9,3 +9,9 @@
 .layout h2 {
   text-align: center;
 }
+
+.page {
+  max-width: calc(800px + 10%);
+  margin: 0 auto;
+  padding: 0 5%;
+}
