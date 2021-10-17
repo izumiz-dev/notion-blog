@@ -11,26 +11,36 @@ const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Profile', page: '/profile' },
 ]
 
-const Header = ({ titlePre = '' }) => {
+const defaultOgImageUrl = 'assets/ogimage.png'
+const defaultUrl = 'https://blog.izumiz.me'
+
+const Header = ({ path = '', titlePre = '', ogImageUrl = '' }) => {
   const { pathname } = useRouter()
 
   return (
     <header className={styles.header}>
       <Head>
         <title>{titlePre ? `${titlePre} |` : ''} Web Log from Notion</title>
-        {/* <meta
-          name="description"
-          content="An example Next.js site using Notion for the blog"
-        /> */}
+        <meta name="izumi notion blog" content="izumi notion blog" />
         <meta name="og:title" content="Web Log from Notion" />
         <meta
           name="google-site-verification"
           content="gea16KM2TN6crqb32YOrh_H1X9fVovXoW2WgV7axPMw"
         />
-        {/* <meta property="og:image" content={ogImageUrl} /> */}
-        {/* <meta name="twitter:site" content="@izumiz-dev" /> */}
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        {/* <meta name="twitter:image" content={ogImageUrl} /> */}
+        <meta property="og:url" content={`${defaultUrl}${path}`} />
+        <meta name="twitter:site" content="@izumiz-dev" />
+        <meta
+          property="og:image"
+          content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
+        />
+        <meta
+          name="twitter:card"
+          content={!ogImageUrl ? 'summary' : 'summary_large_image'}
+        />
+        <meta
+          name="twitter:image"
+          content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
+        />
       </Head>
       <ul>
         {navItems.map(({ label, page, link }) => (

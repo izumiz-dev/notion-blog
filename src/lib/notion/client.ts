@@ -526,8 +526,8 @@ function _buildPost(data) {
     Date: prop.Date.date.start,
     Tags: prop.Tags.multi_select.map((opt) => opt.name),
     // Excerpt: prop.Excerpt.rich_text[0].plain_text,
-    // OGImage:
-    //   prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
+    OGImage:
+      prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
     // Rank: prop.Rank.number,
   }
 

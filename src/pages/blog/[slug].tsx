@@ -100,7 +100,11 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
 
   return (
     <>
-      <Header titlePre={post.Title} />
+      <Header
+        titlePre={post.Title}
+        path={`/blog/${post.Slug}`}
+        ogImageUrl={post.OGImage}
+      />
       <div className={blogStyles.post}>
         <h1>{post.Title || ''}</h1>
         {post.Date && (
