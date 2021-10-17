@@ -20,15 +20,20 @@ const Header = ({ path = '', titlePre = '', ogImageUrl = '' }) => {
   return (
     <header className={styles.header}>
       <Head>
-        <title>{titlePre ? `${titlePre} |` : ''} Web Log from Notion</title>
-        <meta name="izumi notion blog" content="izumi notion blog" />
-        <meta name="og:title" content="Web Log from Notion" />
+        <title>{titlePre ? `${titlePre} |` : ''} Izumiz Notion Blog</title>
+        <meta name="Izumiz Notion Blog" content="Izumiz Notion Blog" />
+        <meta name="og:title" content={`${titlePre} | Izumiz Notion Blog`} />
         <meta
           name="google-site-verification"
           content="gea16KM2TN6crqb32YOrh_H1X9fVovXoW2WgV7axPMw"
         />
         <meta property="og:url" content={`${defaultUrl}${path}`} />
+        <meta
+          property="og:description"
+          content={'Web開発やアプリ開発などの記録、日記をまとめています'}
+        />
         <meta name="twitter:site" content="@izumiz-dev" />
+        <meta name="twitter:creator" content="@izumiz-dev" />
         <meta
           property="og:image"
           content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
