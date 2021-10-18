@@ -46,6 +46,7 @@ const Header = ({ path = '', titlePre = '', ogImageUrl = '' }) => {
           name="twitter:image"
           content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
         />
+        <link rel="canonical" href={`${defaultUrl}${path}`} />
       </Head>
       <ul>
         {navItems.map(({ label, page, link }) => (
