@@ -11,7 +11,7 @@ const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Profile', page: '/profile' },
 ]
 
-const defaultOgImageUrl = 'assets/ogimage.png'
+// const defaultOgImageUrl = 'assets/ogimage.png'
 const defaultUrl = 'https://blog.izumiz.me'
 
 const Header = ({ path = '', titlePre = '', ogImageUrl = '' }) => {
@@ -34,18 +34,12 @@ const Header = ({ path = '', titlePre = '', ogImageUrl = '' }) => {
         />
         <meta name="twitter:site" content="@izumiz-dev" />
         <meta name="twitter:creator" content="@izumiz-dev" />
-        <meta
-          property="og:image"
-          content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
-        />
+        <meta property="og:image" content={!ogImageUrl ? null : ogImageUrl} />
         <meta
           name="twitter:card"
           content={!ogImageUrl ? 'summary' : 'summary_large_image'}
         />
-        <meta
-          name="twitter:image"
-          content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
-        />
+        <meta name="twitter:image" content={!ogImageUrl ? null : ogImageUrl} />
         <link rel="canonical" href={`${defaultUrl}${path}`} />
       </Head>
       <ul>
