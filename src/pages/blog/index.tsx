@@ -17,7 +17,7 @@ import Tag from '../../components/tag'
 import { textBlock } from '../../lib/notion/renderers'
 
 export async function getStaticProps() {
-  const posts = await getPosts()
+  const posts = await getPosts(30)
 
   const sortedPosts = sortPosts(posts, 'desc', 'date')
 
