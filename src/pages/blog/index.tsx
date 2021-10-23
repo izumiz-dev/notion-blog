@@ -5,12 +5,7 @@ import PostsLengthZero from '../../components/posts-length-zero'
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
-import {
-  getBlogLink,
-  getDateStr,
-  getTagLink,
-  sortPosts,
-} from '../../lib/blog-helpers'
+import { getBlogLink, getDateStr, sortPosts } from '../../lib/blog-helpers'
 import { getPosts, getAllTags } from '../../lib/notion/client'
 
 import Tag from '../../components/tag'
@@ -41,9 +36,6 @@ const Index = ({ posts = [] }) => {
             <div className={blogStyles.postPreview} key={post.Slug}>
               <h3>
                 <span className={blogStyles.titleContainer}>
-                  {/* {!post.Published && (
-                    <span className={blogStyles.draftBadge}>Draft</span>
-                  )} */}
                   <Link href="/blog/[slug]" as={getBlogLink(post.Slug)}>
                     <a>{post.Title}</a>
                   </Link>

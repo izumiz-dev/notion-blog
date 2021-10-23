@@ -1,10 +1,7 @@
-import Link from 'next/link'
-import fetch from 'node-fetch'
 import { useRouter } from 'next/router'
 import Header from '../../components/header'
 import Heading from '../../components/heading'
 import components from '../../components/dynamic'
-import ReactJSXParser from '@zeit/react-jsx-parser'
 import blogStyles from '../../styles/blog.module.css'
 import React, { CSSProperties, useEffect } from 'react'
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
@@ -12,10 +9,8 @@ import Tag from '../../components/tag'
 
 import {
   getAllBlocksByPageId,
-  // getPosts,
   getAllPosts,
   getPostBySlug,
-  // getAllTags,
 } from '../../lib/notion/client'
 import { textBlock } from '../../lib/notion/renderers'
 
@@ -33,10 +28,7 @@ export async function getStaticProps({ params: { slug } }) {
       revalidate: 60,
     }
   }
-  // const postData = await getPageData(post.PageId)
   const blocks = await getAllBlocksByPageId(post.PageId)
-  // const recentPosts = await getPosts(5)
-  // const tags = await getAllTags()
 
   return {
     props: {
