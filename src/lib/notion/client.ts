@@ -125,7 +125,6 @@ export async function getPosts(pageSize: number = 10) {
     sorts: [
       {
         property: 'Date',
-        timestamp: 'created_time',
         direction: 'descending',
       },
     ],

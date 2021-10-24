@@ -5,8 +5,8 @@ import PostsLengthZero from '../../components/posts-length-zero'
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
-import { getBlogLink, getDateStr, sortPosts } from '../../lib/blog-helpers'
-import { getPosts, getAllTags } from '../../lib/notion/client'
+import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
+import { getPosts } from '../../lib/notion/client'
 
 import Tag from '../../components/tag'
 import { textBlock } from '../../lib/notion/renderers'
@@ -14,11 +14,9 @@ import { textBlock } from '../../lib/notion/renderers'
 export async function getStaticProps() {
   const posts = await getPosts(30)
 
-  const sortedPosts = sortPosts(posts, 'desc', 'date')
-
   return {
     props: {
-      posts: sortedPosts,
+      posts,
     },
     revalidate: 60,
   }

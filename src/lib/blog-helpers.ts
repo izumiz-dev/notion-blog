@@ -32,20 +32,3 @@ export const normalizeSlug = (slug) => {
   }
   return startingSlash || endingSlash ? normalizeSlug(slug) : slug
 }
-
-export const sortPosts = (
-  posts: any[],
-  orderBy: string[] | string = 'desc',
-  sortBy: 'date'
-) => {
-  const sorted = posts.sort((a, b) => {
-    const at = new Date(a.Date).getTime()
-    const bt = new Date(b.Date).getTime()
-    if (orderBy === 'asc') {
-      return at - bt
-    } else if (orderBy === 'desc') {
-      return bt - at
-    }
-  })
-  return sorted
-}
