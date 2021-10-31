@@ -9,8 +9,8 @@ import sharedStyles from '../../../styles/shared.module.css'
 
 import {
   getBlogLink,
-  getTagLink,
   getBeforeLink,
+  getDateStr,
 } from '../../../lib/blog-helpers'
 import {
   getPosts,
@@ -19,6 +19,9 @@ import {
   getFirstPost,
   getAllTags,
 } from '../../../lib/notion/client'
+import PostsLengthZero from '../../../components/posts-length-zero'
+import { textBlock } from '../../../lib/notion/renderers'
+import Tag from '../../../components/tag'
 
 export async function getStaticProps({ params: { date } }) {
   if (!Date.parse(date) || !/\d{4}-\d{2}-\d{2}/.test(date)) {
@@ -83,111 +86,38 @@ const RenderPostsBeforeDate = ({
 
   return (
     <>
-      <Header
-        path={getBeforeLink(date)}
-        titlePre={`${date}より前の記事`}
-        description={`${date}より前の記事`}
-      />
-      <div className={`${blogStyles.flexContainer}`}>
-        <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
-          {posts.length === 0 && (
-            <p className={blogStyles.noPosts}>There are no posts yet</p>
-          )}
-          {posts.map((post) => {
-            return (
-              <div className={blogStyles.postPreview} key={post.Slug}>
-                {post.Date && (
-                  <div className="posted">📅&nbsp;&nbsp;{post.Date}</div>
-                )}
-                <h3>
-                  <div className={blogStyles.titleContainer}>
-                    <Link
-                      href="/blog/[slug]"
-                      as={getBlogLink(post.Slug)}
-                      passHref
-                    >
-                      <a>{post.Title}</a>
-                    </Link>
-                  </div>
-                </h3>
-                <div className={blogStyles.tagContainer}>
-                  {post.Tags &&
-                    post.Tags.length > 0 &&
-                    post.Tags.map((tag) => (
-                      <Link
-                        href="/blog/tag/[tag]"
-                        as={getTagLink(tag)}
-                        key={`${post.Slug}-${tag}`}
-                        passHref
-                      >
-                        <a className={blogStyles.tag}>🔖&nbsp;&nbsp;{tag}</a>
-                      </Link>
-                    ))}
+      <Header path={getBeforeLink(date)} titlePre={`${date}より前の記事`} />
+      <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
+        <PostsLengthZero posts={posts} />
+        {posts.map((post) => {
+          return (
+            <div className={blogStyles.postPreview} key={post.Slug}>
+              <h3>
+                <span className={blogStyles.titleContainer}>
+                  <Link href="/blog/[slug]" as={getBlogLink(post.Slug)}>
+                    <a>{post.Title}</a>
+                  </Link>
+                </span>
+              </h3>
+              {post.Date && (
+                <div className="authors">投稿日: {getDateStr(post.Date)}</div>
+              )}
+              {post.Tags && (
+                <div className="authors">
+                  タグ:{' '}
+                  {post.Tags.map((tag) => {
+                    return <Tag tag={tag} key={`tag-${tag}`} />
+                  })}
                 </div>
-                <p>{post.Excerpt}</p>
-                <Link href="/blog/[slug]" as={getBlogLink(post.Slug)} passHref>
-                  <a className={blogStyles.expandButton}>続きを読む</a>
-                </Link>
-              </div>
-            )
-          })}
-          {firstPost.Date !== posts[posts.length - 1].Date && (
-            <div className={blogStyles.nextContainer}>
-              <hr />
-              <Link
-                href="/blog/before/[date]"
-                as={getBeforeLink(posts[posts.length - 1].Date)}
-                passHref
-              >
-                <a className={blogStyles.nextButton}>次のページ ＞</a>
-              </Link>
+              )}
+              <p>
+                {(post.preview || []).map((block, idx) =>
+                  textBlock(block, true, `${post.Slug}${idx}`)
+                )}
+              </p>
             </div>
-          )}
-        </div>
-        <div className={blogStyles.sideMenu}>
-          <h3>おすすめ記事</h3>
-          <hr />
-
-          {rankedPosts.length === 0 && (
-            <div className={blogStyles.noContents}>There are no posts yet</div>
-          )}
-          {rankedPosts.length > 0 && (
-            <ul>
-              {rankedPosts.map((rankedPost) => {
-                return (
-                  <li key={rankedPost.Slug}>
-                    <Link
-                      href="/blog/[slug]"
-                      as={getBlogLink(rankedPost.Slug)}
-                      passHref
-                    >
-                      <a>{rankedPost.Title}</a>
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-          <h3>カテゴリー</h3>
-          <hr />
-
-          {tags.length === 0 && (
-            <div className={blogStyles.noContents}>There are no tags yet</div>
-          )}
-          {tags.length > 0 && (
-            <ul>
-              {tags.map((tag) => {
-                return (
-                  <li key={tag}>
-                    <Link href="/blog/tag/[tag]" as={getTagLink(tag)} passHref>
-                      <a>{tag}</a>
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-        </div>
+          )
+        })}
       </div>
     </>
   )
