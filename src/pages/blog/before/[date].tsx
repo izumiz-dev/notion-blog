@@ -56,14 +56,7 @@ export async function getStaticPaths() {
   }
 }
 
-const RenderPostsBeforeDate = ({
-  date,
-  posts = [],
-  firstPost,
-  rankedPosts = [],
-  tags = [],
-  redirect,
-}) => {
+const RenderPostsBeforeDate = ({ date, posts = [], firstPost, redirect }) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -118,6 +111,17 @@ const RenderPostsBeforeDate = ({
             </div>
           )
         })}
+        {firstPost.Date !== posts[posts.length - 1].Date && (
+          <div className={blogStyles.nextContainer}>
+            <Link
+              href="/blog/before/[date]"
+              as={getBeforeLink(posts[posts.length - 1].Date)}
+              passHref
+            >
+              <a className={blogStyles.nextButton}>次のページ ＞</a>
+            </Link>
+          </div>
+        )}
       </div>
     </>
   )

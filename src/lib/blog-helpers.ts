@@ -7,7 +7,7 @@ export const getTagLink = (slug: string) => {
 }
 
 export const getBeforeLink = (date: string) => {
-  return `/blog/before/${date}`
+  return `/blog/before/${date.slice(0, 10)}`
 }
 
 export const getDateStr = (date) => {

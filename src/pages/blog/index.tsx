@@ -5,24 +5,26 @@ import PostsLengthZero from '../../components/posts-length-zero'
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
-import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
-import { getPosts } from '../../lib/notion/client'
+import { getBeforeLink, getBlogLink, getDateStr } from '../../lib/blog-helpers'
+import { getFirstPost, getPosts } from '../../lib/notion/client'
 
 import Tag from '../../components/tag'
 import { textBlock } from '../../lib/notion/renderers'
 
 export async function getStaticProps() {
-  const posts = await getPosts(30)
+  const posts = await getPosts(10)
+  const firstPost = await getFirstPost()
 
   return {
     props: {
       posts,
+      firstPost,
     },
     revalidate: 60,
   }
 }
 
-const Index = ({ posts = [] }) => {
+const Index = ({ posts = [], firstPost }) => {
   return (
     <>
       <Header titlePre="Blog" />
@@ -58,6 +60,17 @@ const Index = ({ posts = [] }) => {
             </div>
           )
         })}
+        {firstPost.Date !== posts[posts.length - 1].Date && (
+          <div className={blogStyles.nextContainer}>
+            <Link
+              href="/blog/before/[date]"
+              as={getBeforeLink(posts[posts.length - 1].Date)}
+              passHref
+            >
+              <a className={blogStyles.nextButton}>次のページ ＞</a>
+            </Link>
+          </div>
+        )}
       </div>
     </>
   )
