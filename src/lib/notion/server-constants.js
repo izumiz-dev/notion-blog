@@ -25,6 +25,7 @@ const NOTION_API_SECRET = process.env.NOTION_API_SECRET
 const DATABASE_ID = process.env.DATABASE_ID
 
 const BLOG_INDEX_CACHE = path.resolve('.blog_index_data')
+const NUMBER_OF_POSTS_PER_PAGE = 10
 
 module.exports = {
   NOTION_TOKEN,
@@ -34,4 +35,5 @@ module.exports = {
   DATABASE_ID,
   BLOG_INDEX_CACHE,
   normalizeId,
+  NUMBER_OF_POSTS_PER_PAGE,
 }

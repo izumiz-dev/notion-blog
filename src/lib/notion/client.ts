@@ -228,6 +228,11 @@ export async function getRankedPosts(pageSize: number = 10) {
 }
 
 export async function getPostsBefore(date: string, pageSize: number = 10) {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.filter((post) => post.Date < date).slice(0, pageSize)
+  }
+
   const params = {
     database_id: DATABASE_ID,
     filter: {

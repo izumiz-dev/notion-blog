@@ -6,6 +6,10 @@ export const getTagLink = (slug: string) => {
   return `/tag/${slug}`
 }
 
+export const getBeforeLink = (date: string) => {
+  return `/blog/before/${date}`
+}
+
 export const getDateStr = (date) => {
   return new Date(date).toLocaleString('ja-JP', {
     month: 'long',
