@@ -104,7 +104,7 @@ interface Link {
   Url: string
 }
 
-export async function getPosts(pageSize: number = 10) {
+export async function getPosts(pageSize: number = 5) {
   let params = {
     database_id: DATABASE_ID,
     filter: {

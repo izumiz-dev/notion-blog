@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Header from '../../components/header'
 import PostsLengthZero from '../../components/posts-length-zero'
 
@@ -12,7 +13,7 @@ import Tag from '../../components/tag'
 import { textBlock } from '../../lib/notion/renderers'
 
 export async function getStaticProps() {
-  const posts = await getPosts(10)
+  const posts = await getPosts(5)
   const firstPost = await getFirstPost()
 
   return {
@@ -25,6 +26,7 @@ export async function getStaticProps() {
 }
 
 const Index = ({ posts = [], firstPost }) => {
+  const router = useRouter()
   return (
     <>
       <Header titlePre="Blog" />
@@ -60,17 +62,25 @@ const Index = ({ posts = [], firstPost }) => {
             </div>
           )
         })}
-        {firstPost.Date !== posts[posts.length - 1].Date && (
-          <div className={blogStyles.nextContainer}>
-            <Link
-              href="/blog/before/[date]"
-              as={getBeforeLink(posts[posts.length - 1].Date)}
-              passHref
-            >
-              <a className={blogStyles.nextButton}>次のページ ＞</a>
-            </Link>
-          </div>
-        )}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {firstPost.Date !== posts[posts.length - 1].Date && (
+            <div>
+              <Link
+                href="/blog/before/[date]"
+                as={getBeforeLink(posts[posts.length - 1].Date)}
+                passHref
+              >
+                <button className={blogStyles.pageButton}>order 👉</button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </>
   )
