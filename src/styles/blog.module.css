@@ -284,3 +284,16 @@
   line-height: 1.8em;
   color: #555;
 }
+
+.pageButton {
+  background-color: #fff;
+  border-radius: 4px;
+  border: 2px var(--purple) solid;
+  color: rgb(65, 65, 65);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}

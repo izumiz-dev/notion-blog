@@ -46,7 +46,7 @@ export async function getStaticProps({ params: { date } }) {
 }
 
 export async function getStaticPaths() {
-  const posts = await getPosts()
+  const posts = await getPosts(5)
   const path = getBeforeLink(posts[posts.length - 1].Date)
 
   // only latest 1 page will be returned in order to reduce build time
@@ -111,17 +111,30 @@ const RenderPostsBeforeDate = ({ date, posts = [], firstPost, redirect }) => {
             </div>
           )
         })}
-        {firstPost.Date !== posts[posts.length - 1].Date && (
-          <div className={blogStyles.nextContainer}>
-            <Link
-              href="/blog/before/[date]"
-              as={getBeforeLink(posts[posts.length - 1].Date)}
-              passHref
-            >
-              <a className={blogStyles.nextButton}>次のページ ＞</a>
-            </Link>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <a onClick={() => router.back()}>
+              <button className={blogStyles.pageButton}>👈 newer</button>
+            </a>
           </div>
-        )}
+          {firstPost.Date !== posts[posts.length - 1].Date && (
+            <div>
+              <Link
+                href="/blog/before/[date]"
+                as={getBeforeLink(posts[posts.length - 1].Date)}
+                passHref
+              >
+                <button className={blogStyles.pageButton}>order 👉</button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </>
   )
