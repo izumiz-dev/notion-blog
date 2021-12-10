@@ -13,9 +13,7 @@
 
   --radius: 8px;
 
-  --font-sans: 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
-    'Hiragino Maru Gothic Pro', 'ヒラギノ角ゴ Pro W3',
-    'Hiragino Kaku Gothic Pro', 'HG丸ｺﾞｼｯｸM-PRO', 'HGMaruGothicMPRO', serif;
+  --font-sans: 'M PLUS Rounded 1c', serif;
   --font-mono: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
   --head-underline: linear-gradient(
@@ -41,9 +39,7 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--fg);
-  font-family: 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
-    'Hiragino Maru Gothic Pro', 'ヒラギノ角ゴ Pro W3',
-    'Hiragino Kaku Gothic Pro', 'HG丸ｺﾞｼｯｸM-PRO', 'HGMaruGothicMPRO', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   background-color: #fcfcfc;
   background-image: linear-gradient(
       rgba(233, 233, 233, 0.5) 2px,

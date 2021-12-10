@@ -58,6 +58,7 @@ if (!DATABASE_ID) {
 
 module.exports = {
   webpack5: true,
+  optimizeFonts: true,
   webpack(cfg, { dev, isServer }) {
     // only compile build-rss in production server build
     if (dev || !isServer) return cfg
