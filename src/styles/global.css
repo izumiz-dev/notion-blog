@@ -13,9 +13,9 @@
 
   --radius: 8px;
 
-  --font-sans: 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
-    'Hiragino Maru Gothic Pro', 'ヒラギノ角ゴ Pro W3',
-    'Hiragino Kaku Gothic Pro', 'HG丸ｺﾞｼｯｸM-PRO', 'HGMaruGothicMPRO', serif;
+  --anti-font-jaggy: 0.03deg;
+
+  --font-sans: 'M PLUS Rounded 1c', serif;
   --font-mono: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
   --head-underline: linear-gradient(
@@ -41,9 +41,7 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--fg);
-  font-family: 'ヒラギノ丸ゴ Pro W4', 'ヒラギノ丸ゴ Pro',
-    'Hiragino Maru Gothic Pro', 'ヒラギノ角ゴ Pro W3',
-    'Hiragino Kaku Gothic Pro', 'HG丸ｺﾞｼｯｸM-PRO', 'HGMaruGothicMPRO', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   background-color: #fcfcfc;
   background-image: linear-gradient(
       rgba(233, 233, 233, 0.5) 2px,
@@ -57,6 +55,24 @@ body {
 
   /* Hack */
   overflow-x: hidden;
+}
+
+body p,
+body span,
+body dl,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li {
+  transform: rotate(var(--anti-font-jaggy));
+}
+
+.authors {
+  transform: rotate(var(--anti-font-jaggy));
 }
 
 code[class*='language-'],
@@ -401,7 +417,7 @@ footer span:nth-child(3) a {
 }
 
 .post-tag {
-  font-size: 80%;
+  font-size: 0.75em;
   /* color: white; */
   background-color: var(--highlight-purple);
   border-radius: 50px 0px 0px 50px;
@@ -412,10 +428,14 @@ footer span:nth-child(3) a {
 
 .post-tag:hover {
   opacity: 60%;
-  font-size: 80%;
+  font-size: 0.75em;
   border-radius: 50px 0px 0px 50px;
   padding: 4px 10px;
   margin-right: 10px;
+}
+
+.tag-div {
+  margin: 2px 4px;
 }
 
 .js-calendar-graph-svg {
