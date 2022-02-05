@@ -18,6 +18,7 @@ const normalizeId = (id) => {
 // for unofficial API
 const NOTION_TOKEN = process.env.NOTION_TOKEN
 const BLOG_INDEX_ID = normalizeId(process.env.BLOG_INDEX_ID)
+const BLOG_HOME_ID = normalizeId(process.env.BLOG_HOME_ID)
 const API_ENDPOINT = 'https://www.notion.so/api/v3'
 
 // for official API
@@ -30,6 +31,7 @@ const NUMBER_OF_POSTS_PER_PAGE = 5
 module.exports = {
   NOTION_TOKEN,
   BLOG_INDEX_ID,
+  BLOG_HOME_ID,
   API_ENDPOINT,
   NOTION_API_SECRET,
   DATABASE_ID,

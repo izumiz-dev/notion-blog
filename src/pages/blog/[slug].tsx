@@ -236,6 +236,8 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
                 )
               )
               break
+            case 'divider':
+              toRender.push(<hr key={block.id}></hr>)
             default:
               if (
                 process.env.NODE_ENV !== 'production' &&
