@@ -6,14 +6,18 @@ import blogStyles from '../../styles/blog.module.css'
 import React, { CSSProperties, useEffect } from 'react'
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
 import Tag from '../../components/tag'
-
+// https://github.com/otoyo/easy-notion-blog/blob/1bd218b40fdf3a31caa1204f86084a0fb15a37ed/src/components/notion-block.tsx
+import { LinkPreview } from '@dhaiwat10/react-link-preview'
 import {
   getAllBlocksByPageId,
   getAllPosts,
   getPostBySlug,
 } from '../../lib/notion/client'
 import { textBlock } from '../../lib/notion/renderers'
+import TweetEmbed from '../../components/TweetEmbed'
+import styles from '../../styles/notion-block.module.css'
 
+import Youtube from 'react-youtube'
 // Get the data for each blog post
 export async function getStaticProps({ params: { slug } }) {
   const post = await getPostBySlug(slug)
@@ -184,6 +188,33 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
               )
             }
           }
+          const Embed = ({ block }) => {
+            if (/^https:\/\/twitter\.com/.test(block.Embed.Url)) {
+              return <TweetEmbed url={block.Embed.Url} />
+            } else if (/^https:\/\/gist\.github\.com/.test(block.Embed.Url)) {
+              return (
+                <LinkPreview
+                  url={block.Embed.Url}
+                  className={styles.linkPreview}
+                />
+              )
+            }
+
+            return null
+          }
+          function youtubeParser(url) {
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+            var match = url.match(regExp)
+            return match && match[7].length == 11 ? match[7] : false
+          }
+
+          const YoutubePlayer = ({ block }) => {
+            const videoId = youtubeParser(block.Video.Url)
+            if (videoId) {
+              return <Youtube videoId={videoId} />
+            }
+            return null
+          }
 
           switch (block.Type) {
             case 'paragraph':
@@ -238,6 +269,31 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
               break
             case 'divider':
               toRender.push(<hr key={block.id}></hr>)
+              break
+            case 'bookmark':
+              toRender.push(
+                <LinkPreview
+                  url={block.Bookmark.Url}
+                  className={styles.linkPreview}
+                  descriptionLength={60}
+                />
+              )
+              break
+            case 'link_preview':
+              toRender.push(
+                <LinkPreview
+                  url={block.LinkPreview.Url}
+                  className={styles.linkPreview}
+                  descriptionLength={60}
+                />
+              )
+              break
+            case 'embed':
+              toRender.push(<Embed block={block} />)
+              break
+            case 'video':
+              toRender.push(<YoutubePlayer block={block} />)
+              break
             default:
               if (
                 process.env.NODE_ENV !== 'production' &&
