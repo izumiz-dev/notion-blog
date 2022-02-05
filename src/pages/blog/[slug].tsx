@@ -199,7 +199,12 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
               renderHeading('h3')
               break
             case 'image':
-              toRender.push(<img src={block.Image.File.Url} />)
+              toRender.push(
+                <img
+                  src={block.Image.File.Url}
+                  alt="画像が読み込まれない場合は更新をしてみてください…"
+                />
+              )
               if (
                 block.Image.Caption.length > 0 &&
                 block.Image.Caption[0].Text.Content
@@ -231,6 +236,8 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
                 )
               )
               break
+            case 'divider':
+              toRender.push(<hr key={block.id}></hr>)
             default:
               if (
                 process.env.NODE_ENV !== 'production' &&
