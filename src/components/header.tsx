@@ -8,7 +8,6 @@ const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Home', page: '/' },
   { label: 'Blog', page: '/blog' },
   { label: 'Tag', page: '/tag' },
-  { label: 'Profile', page: '/profile' },
 ]
 
 // const defaultOgImageUrl = 'assets/ogimage.png'
