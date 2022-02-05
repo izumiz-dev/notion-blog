@@ -26,9 +26,18 @@ const Index = ({ tags = [] }) => {
         <h1>タグ一覧</h1>
       </div>
       <PostsLengthZero posts={tags} />
-      <div style={{ textAlign: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          flexWrap: 'wrap',
+          margin: '0% 20%',
+        }}
+      >
         {tags.map((tag) => (
-          <div className="tag-div" key={`div${tag}`}>
+          <div style={{ margin: '2px' }} className="tag-div" key={`div${tag}`}>
             <Tag tag={tag} key={`tag-${tag}`} />
           </div>
         ))}
