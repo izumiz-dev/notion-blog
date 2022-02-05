@@ -211,7 +211,9 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
           const YoutubePlayer = ({ block }) => {
             const videoId = youtubeParser(block.Video.Url)
             if (videoId) {
-              return <Youtube videoId={videoId} />
+              return (
+                <Youtube videoId={videoId} className={styles.linkPreview} />
+              )
             }
             return null
           }
@@ -299,7 +301,8 @@ const RenderPost = ({ post, blocks = [], redirect }) => {
                 process.env.NODE_ENV !== 'production' &&
                 !(
                   block.Type === 'bulleted_list_item' ||
-                  block.Type === 'numbered_list_item'
+                  block.Type === 'numbered_list_item' ||
+                  block.Type === 'embed'
                 )
               ) {
                 console.log(
