@@ -537,6 +537,54 @@ export async function getAllBlocksByPageId(pageId) {
             Quote: quote,
           }
           break
+        case 'embed':
+          const embed = {
+            Url: item.embed.url,
+            Caption: item.embed.caption,
+          }
+          block = {
+            Id: item.id,
+            Type: item.type,
+            HasChildren: item.has_children,
+            Embed: embed,
+          }
+          break
+        case 'bookmark':
+          const bookmark = {
+            Url: item.bookmark.url,
+            Caption: item.bookmark.caption,
+          }
+          block = {
+            Id: item.id,
+            Type: item.type,
+            HasChildren: item.has_children,
+            Bookmark: bookmark,
+          }
+          break
+        case 'link_preview':
+          const linkPre = {
+            Url: item.link_preview.url,
+          }
+          block = {
+            Id: item.id,
+            Type: item.type,
+            HasChildren: item.has_children,
+            LinkPreview: linkPre,
+          }
+          break
+        case 'video':
+          const video = {
+            Caption: item.video.caption,
+            Type: item.video.type,
+            Url: item.video.external.url,
+          }
+          block = {
+            Id: item.id,
+            Type: item.type,
+            HasChildren: item.has_children,
+            Video: video,
+          }
+          break
         default:
           block = {
             Id: item.id,
