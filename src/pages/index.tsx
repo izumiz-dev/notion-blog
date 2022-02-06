@@ -2,7 +2,6 @@ import Header from '../components/header'
 import components from '../components/dynamic'
 
 import blogStyles from '../styles/blog.module.css'
-import sharedStyles from '../styles/shared.module.css'
 import { textBlock } from '../lib/notion/renderers'
 
 import { getAllBlocksByPageId } from '../lib/notion/client'
@@ -33,9 +32,8 @@ const Index = ({ content = [] }) => {
   } = {}
   return (
     <>
-      <Header titlePre="Tag" />
-      <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
-        {/* {JSON.stringify(content, null, 2)} */}
+      <Header titlePre="Home" />
+      <div className={blogStyles.post}>
         {content.map((block, blockIdx) => {
           const isLast = blockIdx === content.length - 1
           const isList =
